@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="FeedbackIQ helps colleges collect faculty feedback and review performance insights.">
+  <title>{% block title %}FeedbackIQ — College Feedback & Analytics{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 font-sans text-white">
+  <nav class="border-b border-white/10 bg-slate-950/40 px-5 py-4 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between">
+      <a href="{{ url_for('login') }}" class="text-xl font-bold tracking-tight">🎓 FeedbackIQ</a>
+      {% if session.get('user') %}
+      <div class="flex items-center gap-3 text-sm">
+        <span class="hidden text-blue-100 sm:inline">{{ session.get('user') }}</span>
+        <span class="rounded-full bg-blue-400/15 px-3 py-1 text-xs capitalize text-blue-200">{{ session.get('role') }}</span>
+        <form method="post" action="{{ url_for('logout') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="rounded-lg bg-rose-500/15 px-3 py-2 text-rose-200 transition hover:bg-rose-500/25">Sign out</button>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+  </nav>
+
+  <main class="mx-auto max-w-6xl px-4 py-9 sm:px-6">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+      <div role="status" class="mb-4 rounded-xl border px-4 py-3 text-sm
+        {% if category == 'error' %}border-rose-400/30 bg-rose-500/10 text-rose-100
+        {% else %}border-emerald-400/30 bg-emerald-500/10 text-emerald-100{% endif %}">
+        {{ message }}
+      </div>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="px-4 pb-8 text-center text-xs text-blue-200/50">
+    FeedbackIQ · College Faculty Feedback Management & Analytics
+  </footer>
+</body>
+</html>

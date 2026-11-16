@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ code }} — FeedbackIQ{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-xl rounded-3xl border border-white/10 bg-white/[0.06] p-10 text-center">
+  <p class="text-5xl font-black text-cyan-300">{{ code }}</p>
+  <h1 class="mt-4 text-2xl font-bold">Something went wrong</h1>
+  <p class="mt-2 text-blue-100/65">{{ message }}</p>
+  <a href="{{ url_for('login') }}" class="mt-7 inline-block rounded-xl bg-blue-500 px-5 py-3 font-semibold hover:bg-blue-400">Return to sign in</a>
+</div>
+{% endblock %}

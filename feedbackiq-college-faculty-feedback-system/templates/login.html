@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Sign in — FeedbackIQ{% endblock %}
+{% block content %}
+<div class="grid min-h-[72vh] items-center gap-10 lg:grid-cols-2">
+  <section class="max-w-xl">
+    <div class="mb-5 inline-flex items-center rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs font-semibold uppercase tracking-[.18em] text-cyan-200">Academic feedback, made actionable</div>
+    <h1 class="text-4xl font-black leading-tight sm:text-5xl">Better feedback.<br><span class="text-cyan-300">Better teaching.</span></h1>
+    <p class="mt-5 max-w-lg text-lg leading-8 text-blue-100/75">A centralized platform for students to share faculty feedback, faculty members to review insights, and administrators to understand institution-wide trends.</p>
+    <div class="mt-8 grid gap-3 sm:grid-cols-3">
+      <div class="rounded-2xl border border-white/10 bg-white/5 p-4"><div class="text-2xl">🎓</div><p class="mt-2 font-semibold">Student voice</p><p class="mt-1 text-xs text-blue-100/60">Simple feedback submission</p></div>
+      <div class="rounded-2xl border border-white/10 bg-white/5 p-4"><div class="text-2xl">📊</div><p class="mt-2 font-semibold">Useful insights</p><p class="mt-1 text-xs text-blue-100/60">Faculty-level analytics</p></div>
+      <div class="rounded-2xl border border-white/10 bg-white/5 p-4"><div class="text-2xl">🏛️</div><p class="mt-2 font-semibold">Admin overview</p><p class="mt-1 text-xs text-blue-100/60">Centralized monitoring</p></div>
+    </div>
+  </section>
+
+  <section class="mx-auto w-full max-w-md rounded-3xl border border-white/15 bg-white/[0.08] p-7 shadow-2xl backdrop-blur-xl sm:p-9">
+    <div class="mb-7 text-center">
+      <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-400 to-cyan-400 text-2xl shadow-lg shadow-cyan-500/20">🔐</div>
+      <h2 class="text-2xl font-bold">Welcome back</h2>
+      <p class="mt-2 text-sm text-blue-100/60">Sign in with your institution-provided account.</p>
+    </div>
+    <form method="post" class="space-y-5">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div>
+        <label for="username" class="mb-2 block text-sm font-medium text-blue-100">Username</label>
+        <input id="username" name="username" autocomplete="username" required maxlength="40" class="w-full rounded-xl border border-white/15 bg-slate-950/50 px-4 py-3 text-white outline-none transition placeholder:text-blue-100/30 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20" placeholder="Enter your username">
+      </div>
+      <div>
+        <label for="password" class="mb-2 block text-sm font-medium text-blue-100">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required class="w-full rounded-xl border border-white/15 bg-slate-950/50 px-4 py-3 text-white outline-none transition placeholder:text-blue-100/30 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20" placeholder="Enter your password">
+      </div>
+      <button class="w-full rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 py-3.5 font-bold text-white shadow-lg shadow-blue-500/20 transition hover:-translate-y-0.5 hover:brightness-110">Sign in securely →</button>
+    </form>
+    <p class="mt-6 text-center text-xs leading-5 text-blue-100/50">Accounts are created by the system administrator. Contact your administrator if you need access.</p>
+  </section>
+</div>
+{% endblock %}

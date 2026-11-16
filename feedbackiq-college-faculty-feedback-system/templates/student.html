@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Student feedback — FeedbackIQ{% endblock %}
+{% block content %}
+<div class="mb-8">
+  <p class="text-sm font-semibold uppercase tracking-[.18em] text-cyan-300">Student portal</p>
+  <h1 class="mt-2 text-3xl font-black">Share your feedback</h1>
+  <p class="mt-2 text-blue-100/65">Your response is stored without a student identifier in the feedback record. Please keep comments respectful and constructive.</p>
+</div>
+<div class="max-w-2xl rounded-3xl border border-white/15 bg-white/[0.08] p-6 shadow-xl backdrop-blur sm:p-8">
+  <form method="post" class="space-y-7">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div>
+      <label for="faculty_id" class="mb-2 block font-semibold text-blue-100">Faculty member</label>
+      <select id="faculty_id" name="faculty_id" required class="w-full rounded-xl border border-white/15 bg-slate-900 px-4 py-3 text-white focus:border-cyan-300 focus:outline-none">
+        <option value="">Choose a faculty member</option>
+        {% for f in faculty %}<option value="{{ f.id }}">{{ f.name }} — {{ f.department }}</option>{% endfor %}
+      </select>
+      {% if not faculty %}<p class="mt-2 text-sm text-amber-200">No faculty accounts have been added yet. Contact the administrator.</p>{% endif %}
+    </div>
+    <div>
+      <div class="mb-3 flex items-center justify-between"><label for="rating" class="font-semibold text-blue-100">Overall rating</label><span class="rounded-lg bg-amber-400/10 px-3 py-1 font-bold text-amber-200"><span id="rating-value">3</span> / 5 ★</span></div>
+      <input id="rating" name="rating" type="range" min="1" max="5" value="3" class="w-full accent-amber-400" oninput="document.getElementById('rating-value').textContent=this.value">
+      <div class="flex justify-between text-xs text-blue-100/45"><span>Needs improvement</span><span>Excellent</span></div>
+    </div>
+    <div>
+      <label for="comments" class="mb-2 block font-semibold text-blue-100">Comments <span class="font-normal text-blue-100/45">(optional, max 1,500 characters)</span></label>
+      <textarea id="comments" name="comments" maxlength="1500" rows="5" placeholder="Share constructive feedback..." class="w-full resize-y rounded-xl border border-white/15 bg-slate-950/40 px-4 py-3 text-white outline-none placeholder:text-blue-100/30 focus:border-cyan-300"></textarea>
+    </div>
+    <button {% if not faculty %}disabled{% endif %} class="w-full rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 py-3.5 font-bold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40">Submit feedback</button>
+  </form>
+</div>
+{% endblock %}

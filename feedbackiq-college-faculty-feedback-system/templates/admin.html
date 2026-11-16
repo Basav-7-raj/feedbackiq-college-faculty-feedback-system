@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Administration — FeedbackIQ{% endblock %}
+{% block content %}
+<div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+  <div><p class="text-sm font-semibold uppercase tracking-[.18em] text-cyan-300">Administrator portal</p><h1 class="mt-2 text-3xl font-black">Institution overview</h1><p class="mt-2 text-blue-100/65">A consolidated view of faculty feedback activity.</p></div>
+  <div class="rounded-2xl border border-white/10 bg-white/[0.07] px-5 py-3 text-center"><p class="text-2xl font-black">{{ stats|length }}</p><p class="text-xs text-blue-100/60">Faculty profiles</p></div>
+</div>
+<div class="mb-8 grid gap-4 sm:grid-cols-3">
+  <div class="rounded-2xl border border-blue-300/20 bg-blue-400/10 p-5"><p class="text-sm text-blue-100/70">Feedback submissions</p><p class="mt-2 text-3xl font-black">{{ total_fb }}</p></div>
+  <div class="rounded-2xl border border-emerald-300/20 bg-emerald-400/10 p-5"><p class="text-sm text-emerald-100/70">Overall average</p><p class="mt-2 text-3xl font-black">{{ overall_avg }}</p></div>
+  <div class="rounded-2xl border border-amber-300/20 bg-amber-400/10 p-5"><p class="text-sm text-amber-100/70">Highest-rated faculty</p><p class="mt-2 text-xl font-bold">{{ top_faculty }}</p></div>
+</div>
+<section class="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06]">
+  <div class="border-b border-white/10 px-5 py-4"><h2 class="font-bold">Faculty performance</h2><p class="mt-1 text-xs text-blue-100/50">Ratings are descriptive feedback indicators, not standalone measures of teaching quality.</p></div>
+  <div class="overflow-x-auto">
+    <table class="w-full min-w-[650px] text-sm">
+      <thead class="bg-white/[0.05] text-left text-xs uppercase tracking-wider text-blue-100/60"><tr><th class="px-5 py-4">Faculty member</th><th class="px-5 py-4">Department</th><th class="px-5 py-4 text-center">Reviews</th><th class="px-5 py-4 text-center">Average</th><th class="px-5 py-4">Rating indicator</th></tr></thead>
+      <tbody class="divide-y divide-white/5">
+      {% for row in stats %}
+      <tr class="hover:bg-white/[0.04]">
+        <td class="px-5 py-4 font-semibold">{{ row.name }}</td><td class="px-5 py-4 text-blue-100/60">{{ row.department }}</td>
+        <td class="px-5 py-4 text-center">{{ row.total }}</td><td class="px-5 py-4 text-center font-bold text-amber-200">{{ row.avg if row.avg is not none else '—' }}</td>
+        <td class="px-5 py-4"><div class="h-2 w-40 max-w-full overflow-hidden rounded-full bg-white/10"><div class="h-full rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400" style="width:{{ (row.avg / 5 * 100) if row.avg is not none else 0 }}%"></div></div></td>
+      </tr>
+      {% else %}<tr><td colspan="5" class="px-5 py-12 text-center text-blue-100/50">No faculty accounts have been created yet.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
